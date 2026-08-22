@@ -9,7 +9,9 @@ import { toast } from "sonner";
 import { useMenuStore, Product, Category, Modifier } from "@/lib/store/menuStore";
 import { useEmployeeStore, Employee } from "@/lib/store/employeeStore";
 import { useAuditStore } from "@/lib/store/auditStore";
+import { useAuditStore } from "@/lib/store/auditStore";
 import AuthGuard from "@/components/AuthGuard";
+import AdminNav from "@/components/admin/AdminNav";
 import { formatPrice } from "@/lib/utils";
 
 type ActiveTab = 'products' | 'employees' | 'modifiers';
@@ -204,55 +206,55 @@ export default function ProductManagement() {
 
   return (
     <AuthGuard allowedRoles={['admin']} redirectTo="/admin/login">
-    <div className="min-h-screen bg-slate-900 text-slate-200 p-3 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
+    <div className="min-h-screen bg-[#0f172a] text-slate-200 pb-24 md:pb-6 relative z-10 overflow-y-auto custom-scrollbar">
       
       {/* Header NavBar */}
-      <div className="flex flex-col gap-3 mb-6 md:mb-8 max-w-7xl mx-auto bg-slate-800/50 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-slate-700/50 shadow-lg">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2 md:gap-3">
-             <div className="bg-emerald-500/20 p-2 md:p-3 rounded-xl text-emerald-400"><Calculator size={20} /></div>
-             <div>
-                <h1 className="text-lg md:text-2xl font-bold text-white leading-tight">Admin Central</h1>
-                <p className="text-xs text-slate-400">Panel de Control</p>
-             </div>
+      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40 mb-6 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+               <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 p-2.5 rounded-2xl text-white shadow-lg shadow-emerald-500/20">
+                 <Calculator size={22} />
+               </div>
+               <div>
+                  <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Admin Central</h1>
+                  <p className="text-xs text-slate-400 font-medium">{currentEmployee?.name || 'Panel de Control'}</p>
+               </div>
+            </div>
+            
+            <AdminNav />
+            
+            <div className="flex gap-2 items-center">
+              <button 
+                onClick={handleLogout}
+                className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 p-2 md:px-4 md:py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all active:scale-95"
+              >
+                <LogOut size={18} />
+                <span className="hidden sm:inline">Salir</span>
+              </button>
+            </div>
           </div>
-          <button 
-            onClick={handleLogout}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-3 md:px-5 py-2 md:py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95 text-sm"
-          >
-            <LogOut size={18} />
-            <span className="hidden sm:inline">Salir</span>
-          </button>
-        </div>
-        <div className="flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
-           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/dashboard')}>Dashboard</button>
-           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all text-sm" onClick={()=>router.push('/admin/products')}>Menú</button>
-           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/settings')}>Configuración</button>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto">
-
-        {/* Sub-tabs: Products vs Employees */}
-        <div className="flex gap-2 md:gap-3 mb-4 md:mb-6 overflow-x-auto custom-scrollbar whitespace-nowrap">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Segmented Control Sub-tabs */}
+        <div className="flex bg-slate-800/80 p-1 rounded-2xl border border-slate-700/50 shadow-inner mb-6">
           <button
             onClick={() => setActiveTab('products')}
-            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'products' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-1 py-2.5 rounded-xl font-semibold transition-all text-sm md:text-base ${activeTab === 'products' ? 'bg-slate-700 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
           >
-            Productos ({products.length})
+            Productos <span className="hidden sm:inline">({products.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('employees')}
-            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all flex items-center gap-2 text-sm md:text-base ${activeTab === 'employees' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-1 py-2.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm md:text-base ${activeTab === 'employees' ? 'bg-slate-700 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
           >
-            <Users size={16} /> Empleados ({employees.length})
+            <Users size={16} className="hidden sm:block" /> Empleados <span className="hidden sm:inline">({employees.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('modifiers')}
-            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'modifiers' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-1 py-2.5 rounded-xl font-semibold transition-all text-sm md:text-base ${activeTab === 'modifiers' ? 'bg-slate-700 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
           >
-            Modificadores ({modifiers.length})
-          </button>
+            Extras <span className="hidden sm:inline">({modifiers.length})</span>
+        </div>
         </div>
 
         {/* PRODUCTS TAB */}

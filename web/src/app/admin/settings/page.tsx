@@ -8,6 +8,7 @@ import { useBusinessStore, TableConfig } from "@/lib/store/businessStore";
 import { useEmployeeStore } from "@/lib/store/employeeStore";
 import { useAuditStore } from "@/lib/store/auditStore";
 import AuthGuard from "@/components/AuthGuard";
+import AdminNav from "@/components/admin/AdminNav";
 
 export default function Settings() {
   const router = useRouter();
@@ -71,37 +72,38 @@ export default function Settings() {
 
   return (
     <AuthGuard allowedRoles={['admin']} redirectTo="/admin/login">
-    <div className="min-h-screen bg-slate-900 text-slate-200 p-6 relative z-10 overflow-y-auto custom-scrollbar">
+    <div className="min-h-screen bg-[#0f172a] text-slate-200 pb-24 md:pb-6 relative z-10 overflow-y-auto custom-scrollbar">
       
       {/* Header NavBar */}
-      <div className="flex justify-between items-center mb-8 max-w-7xl mx-auto bg-slate-800/50 p-4 rounded-3xl border border-slate-700/50 shadow-lg">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-             <div className="bg-emerald-500/20 p-3 rounded-xl text-emerald-400"><Calculator size={24} /></div>
-             <div>
-                <h1 className="text-2xl font-bold text-white leading-tight">Admin Central</h1>
-                <p className="text-xs text-slate-400">Panel de Control</p>
-             </div>
+      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-40 mb-6 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+               <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 p-2.5 rounded-2xl text-white shadow-lg shadow-emerald-500/20">
+                 <Calculator size={22} />
+               </div>
+               <div>
+                  <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Admin Central</h1>
+                  <p className="text-xs text-slate-400 font-medium">{currentEmployee?.name || 'Panel de Control'}</p>
+               </div>
+            </div>
+            
+            <AdminNav />
+            
+            <div className="flex gap-2 items-center">
+              <button 
+                onClick={handleLogout}
+                className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 p-2 md:px-4 md:py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all active:scale-95"
+              >
+                <LogOut size={18} />
+                <span className="hidden sm:inline">Salir</span>
+              </button>
+            </div>
           </div>
-          <div className="flex gap-2 bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/dashboard')}>Dashboard Financiero</button>
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/products')}>Gestión de Menú</button>
-             <button className="px-5 py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all" onClick={()=>router.push('/admin/settings')}>Configuración</button>
-          </div>
-        </div>
-        
-        <div className="flex gap-4">          
-          <button 
-            onClick={handleLogout}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95"
-          >
-            <LogOut size={20} />
-            Salir
-          </button>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* BUSINESS INFO */}
         <div className="glass-panel p-8 rounded-3xl h-fit border border-slate-700/50 shadow-2xl">
