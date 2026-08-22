@@ -45,6 +45,9 @@ const PRINTER_STYLES = `
 `;
 
 function executePrint(htmlContent: string) {
+  // Temporarily disable printing per user request (no printer available)
+  console.log("Printing is temporarily disabled.");
+  /*
   const iframe = document.createElement('iframe');
   iframe.style.position = 'fixed';
   iframe.style.right = '0';
@@ -73,6 +76,7 @@ function executePrint(htmlContent: string) {
       }, 1000);
     }, 250);
   }
+  */
 }
 
 export function printKitchenTicket(order: PrintOrder) {
