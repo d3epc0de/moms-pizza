@@ -43,6 +43,16 @@ export default function AdminNav() {
             </button>
           );
         })}
+        
+        <div className="w-px bg-slate-700/50 mx-1 my-1"></div>
+        
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 text-red-400 hover:text-white hover:bg-red-500/20"
+        >
+          <LogOut size={18} />
+          Salir
+        </button>
       </div>
 
       {/* Mobile Bottom Navigation (Hidden on Desktop) */}
@@ -68,6 +78,16 @@ export default function AdminNav() {
               </button>
             );
           })}
+          
+          <button
+            onClick={handleLogout}
+            className="flex flex-col items-center gap-1 p-2 min-w-[4.5rem] transition-colors text-red-500 hover:text-red-400"
+          >
+            <div className="p-1.5 rounded-full transition-all duration-300">
+              <LogOut size={22} />
+            </div>
+            <span className="text-[10px] font-medium">Salir</span>
+          </button>
         </div>
       </div>
     </>

@@ -91,13 +91,6 @@ export default function Settings() {
             <AdminNav />
             
             <div className="flex gap-2 items-center">
-              <button 
-                onClick={handleLogout}
-                className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 p-2 md:px-4 md:py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all active:scale-95"
-              >
-                <LogOut size={18} />
-                <span className="hidden sm:inline">Salir</span>
-              </button>
             </div>
           </div>
         </div>
