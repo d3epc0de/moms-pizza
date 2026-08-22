@@ -9,8 +9,9 @@ import ActiveOrdersGrid from "@/components/pos/ActiveOrdersGrid";
 import AuthGuard from "@/components/AuthGuard";
 import { Product, useMenuStore } from "@/lib/store/menuStore";
 import { useCartStore } from "@/lib/store/cartStore";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, ChefHat, Receipt, Utensils } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
 
 export type ViewMode = 'menu' | 'orders';
 
@@ -121,6 +122,37 @@ export default function PosDashboard() {
 
       {/* Mobile Layout */}
       <div className="flex md:hidden flex-col h-screen overflow-hidden relative z-10 text-slate-200">
+        
+        {/* Mobile Header Top */}
+        {!mobileCartOpen && (
+          <div className="flex items-center justify-between bg-slate-900/90 backdrop-blur-md p-3 px-4 border-b border-slate-800 z-20">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-black text-white px-1">Terminal</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setViewMode(viewMode === 'menu' ? 'orders' : 'menu')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold transition-all shadow-sm ${
+                  viewMode === 'orders' 
+                    ? 'bg-orange-500 text-white border border-orange-400/50' 
+                    : 'bg-slate-800 text-orange-400 border border-slate-700 hover:bg-slate-700'
+                }`}
+              >
+                {viewMode === 'orders' ? <Utensils size={16} /> : <Receipt size={16} />}
+                <span>{viewMode === 'orders' ? 'Menú' : 'Órdenes'}</span>
+              </button>
+              
+              <Link
+                href="/kds"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold bg-slate-800 text-blue-400 border border-slate-700 hover:bg-slate-700 transition-all shadow-sm"
+              >
+                <ChefHat size={16} />
+                <span>KDS</span>
+              </Link>
+            </div>
+          </div>
+        )}
+
         <div className="flex-1 overflow-hidden p-2 pb-0">
           {mobileCartOpen ? (
             <div className="h-full flex flex-col">
