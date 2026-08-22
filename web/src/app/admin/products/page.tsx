@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { useMenuStore, Product, Category, Modifier } from "@/lib/store/menuStore";
 import { useEmployeeStore, Employee } from "@/lib/store/employeeStore";
 import { useAuditStore } from "@/lib/store/auditStore";
-import { useAuditStore } from "@/lib/store/auditStore";
 import AuthGuard from "@/components/AuthGuard";
 import AdminNav from "@/components/admin/AdminNav";
 import { formatPrice } from "@/lib/utils";
@@ -234,6 +233,9 @@ export default function ProductManagement() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Segmented Control Sub-tabs */}
         <div className="flex bg-slate-800/80 p-1 rounded-2xl border border-slate-700/50 shadow-inner mb-6">
@@ -254,7 +256,7 @@ export default function ProductManagement() {
             className={`flex-1 py-2.5 rounded-xl font-semibold transition-all text-sm md:text-base ${activeTab === 'modifiers' ? 'bg-slate-700 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
           >
             Extras <span className="hidden sm:inline">({modifiers.length})</span>
-        </div>
+          </button>
         </div>
 
         {/* PRODUCTS TAB */}

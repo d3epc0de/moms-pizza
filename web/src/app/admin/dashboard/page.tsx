@@ -19,7 +19,6 @@ import AuthGuard from "@/components/AuthGuard";
 import { formatPrice, formatTime } from "@/lib/utils";
 import { parseISO, format } from "date-fns";
 import { es } from "date-fns/locale";
-import { es } from "date-fns/locale";
 import { toast } from "sonner";
 import AdminNav from "@/components/admin/AdminNav";
 
