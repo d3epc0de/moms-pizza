@@ -22,32 +22,29 @@ const PRINTER_STYLES = `
   body { 
     font-family: 'Courier New', Courier, monospace; 
     margin: 0; 
-    padding: 15px; 
-    width: 300px; /* 80mm paper width */
+    padding: 8px; 
+    width: 190px; /* 58mm paper width */
     color: #000;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 1.2;
     background: #fff;
   }
   .center { text-align: center; }
   .bold { font-weight: bold; }
-  .text-lg { font-size: 18px; }
-  .text-xl { font-size: 24px; }
-  .divider { border-bottom: 1px dashed #000; margin: 10px 0; }
+  .text-lg { font-size: 14px; }
+  .text-xl { font-size: 18px; }
+  .divider { border-bottom: 1px dashed #000; margin: 8px 0; }
   .flex-between { display: flex; justify-content: space-between; }
-  .mb-2 { margin-bottom: 8px; }
-  .mt-2 { margin-top: 8px; }
+  .mb-2 { margin-bottom: 6px; }
+  .mt-2 { margin-top: 6px; }
   .item-row { display: flex; justify-content: space-between; margin-top: 4px; }
-  .item-name { width: 65%; word-break: break-all; }
-  .item-price { width: 35%; text-align: right; }
-  .modifier { margin-left: 10px; font-size: 12px; }
-  .notes { margin-left: 10px; font-size: 12px; font-style: italic; border: 1px solid #000; padding: 2px; display: inline-block; margin-top: 2px;}
+  .item-name { width: 70%; word-break: break-all; }
+  .item-price { width: 30%; text-align: right; }
+  .modifier { margin-left: 8px; font-size: 10px; }
+  .notes { margin-left: 8px; font-size: 10px; font-style: italic; border: 1px solid #000; padding: 2px; display: inline-block; margin-top: 2px;}
 `;
 
 function executePrint(htmlContent: string) {
-  // Temporarily disable printing per user request (no printer available)
-  console.log("Printing is temporarily disabled.");
-  /*
   const iframe = document.createElement('iframe');
   iframe.style.position = 'fixed';
   iframe.style.right = '0';
@@ -76,7 +73,6 @@ function executePrint(htmlContent: string) {
       }, 1000);
     }, 250);
   }
-  */
 }
 
 export function printKitchenTicket(order: PrintOrder) {
