@@ -9,7 +9,8 @@ import ActiveOrdersGrid from "@/components/pos/ActiveOrdersGrid";
 import AuthGuard from "@/components/AuthGuard";
 import { Product, useMenuStore } from "@/lib/store/menuStore";
 import { useCartStore } from "@/lib/store/cartStore";
-import { ShoppingCart, ChefHat, Receipt, Utensils } from "lucide-react";
+import { useEmployeeStore } from "@/lib/store/employeeStore";
+import { ShoppingCart, ChefHat, Receipt, Utensils, LogOut } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 
@@ -139,7 +140,7 @@ export default function PosDashboard() {
                 }`}
               >
                 {viewMode === 'orders' ? <Utensils size={16} /> : <Receipt size={16} />}
-                <span>{viewMode === 'orders' ? 'Menú' : 'Órdenes'}</span>
+                <span className="hidden sm:inline">{viewMode === 'orders' ? 'Menú' : 'Órdenes'}</span>
               </button>
               
               <Link
@@ -147,8 +148,19 @@ export default function PosDashboard() {
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold bg-slate-800 text-blue-400 border border-slate-700 hover:bg-slate-700 transition-all shadow-sm"
               >
                 <ChefHat size={16} />
-                <span>KDS</span>
+                <span className="hidden sm:inline">KDS</span>
               </Link>
+              
+              <button
+                onClick={() => {
+                  useEmployeeStore.getState().logout();
+                  window.location.href = '/pos';
+                }}
+                className="flex items-center justify-center p-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 transition-all"
+                title="Cerrar Sesión"
+              >
+                <LogOut size={18} />
+              </button>
             </div>
           </div>
         )}
