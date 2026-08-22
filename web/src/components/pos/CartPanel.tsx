@@ -21,11 +21,15 @@ import { useRouter } from "next/navigation";
 export default function CartPanel({ 
   onCheckout, 
   viewMode, 
-  onToggleView 
+  onToggleView,
+  isMobile,
+  onMobileClose
 }: { 
   onCheckout: () => void, 
   viewMode?: 'menu' | 'orders',
-  onToggleView?: (mode: 'menu' | 'orders') => void
+  onToggleView?: (mode: 'menu' | 'orders') => void,
+  isMobile?: boolean,
+  onMobileClose?: () => void
 }) {
   const { cart, orderType, customerInfo, setOrderType, setCustomerInfo, removeFromCart, updateCartItemQuantity, clearCart, setCart, activeOrderId, setActiveOrderId } = useCartStore();
   const { processQueue } = useSyncStore();
@@ -153,7 +157,7 @@ export default function CartPanel({
   };
 
   return (
-    <div className="w-[35%] glass-panel rounded-3xl flex flex-col overflow-hidden shadow-2xl border border-slate-600/30 relative">
+    <div className={`${isMobile ? 'w-full flex-1' : 'w-[35%]'} glass-panel rounded-3xl flex flex-col overflow-hidden shadow-2xl border border-slate-600/30 relative`}>
       
       {/* Connectivity banner */}
       {mounted && !isOnline && (
@@ -163,7 +167,17 @@ export default function CartPanel({
         </div>
       )}
 
-      <div className="bg-slate-800/80 p-5 flex flex-col gap-4 border-b border-slate-700/50">
+      <div className={`bg-slate-800/80 ${isMobile ? 'p-3' : 'p-5'} flex flex-col gap-3 border-b border-slate-700/50`}>
+        {/* Mobile back button */}
+        {isMobile && onMobileClose && (
+          <button
+            onClick={onMobileClose}
+            className="flex items-center gap-2 text-blue-400 font-medium text-sm active:scale-95 transition-all self-start bg-blue-500/10 px-3 py-1.5 rounded-xl"
+          >
+            <X size={16} />
+            Volver al Menú
+          </button>
+        )}
         <div className="flex justify-between items-center gap-2">
           <div className="flex bg-slate-900/50 p-1 rounded-xl border border-slate-700/50 shrink-0">
             <button 

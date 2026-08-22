@@ -110,8 +110,8 @@ export default function ModifierModal({ product, onClose }: { product: Product, 
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="glass-panel p-8 rounded-[2rem] w-full max-w-lg shadow-2xl border border-slate-600/50 animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-slate-900/60 backdrop-blur-md md:p-4 animate-in fade-in duration-200">
+      <div className="glass-panel p-6 md:p-8 rounded-t-[2rem] md:rounded-[2rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-600/50 animate-in slide-in-from-bottom-4 md:zoom-in-95 duration-200">
         <div className="flex justify-between items-start mb-6">
           <div>
             <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
