@@ -127,7 +127,10 @@ export default function PosDashboard() {
               <CartPanel 
                 onCheckout={() => setCheckoutModalOpen(true)} 
                 viewMode={viewMode}
-                onToggleView={(mode) => setViewMode(mode)}
+                onToggleView={(mode) => {
+                  setViewMode(mode);
+                  setMobileCartOpen(false);
+                }}
                 isMobile={true}
                 onMobileClose={() => setMobileCartOpen(false)}
               />

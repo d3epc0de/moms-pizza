@@ -57,17 +57,25 @@ export default function ActiveOrdersGrid({ onCheckout, onAddItems }: ActiveOrder
   };
 
   return (
-    <div className="w-[65%] glass-panel rounded-3xl p-6 flex flex-col shadow-2xl overflow-hidden relative">
+    <div className="w-full md:w-[65%] lg:flex-1 glass-panel md:rounded-3xl p-4 md:p-6 flex flex-col shadow-2xl overflow-hidden relative">
       <div className="flex justify-between items-center mb-6 border-b border-slate-700/50 pb-4">
         <div>
-          <h2 className="text-3xl font-black text-white flex items-center gap-3">
-            <Receipt className="text-orange-400" size={32} />
+          <h2 className="text-xl md:text-3xl font-black text-white flex items-center gap-2 md:gap-3">
+            <Receipt className="text-orange-400" size={28} />
             Gestión de Órdenes
           </h2>
-          <p className="text-slate-400 font-medium">Control unificado de cuentas abiertas y despachos</p>
+          <p className="hidden md:block text-slate-400 font-medium">Control unificado de cuentas abiertas y despachos</p>
         </div>
-        <div className="bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-700 text-slate-300 font-bold">
-          {activeOrders.length} activas
+        <div className="flex items-center gap-2">
+          <div className="bg-slate-900/80 px-3 md:px-4 py-1.5 md:py-2 rounded-xl border border-slate-700 text-slate-300 font-bold text-sm md:text-base">
+            {activeOrders.length} activas
+          </div>
+          <button 
+            onClick={onAddItems}
+            className="md:hidden bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all shadow shadow-blue-900/20 text-sm"
+          >
+            Volver
+          </button>
         </div>
       </div>
 
