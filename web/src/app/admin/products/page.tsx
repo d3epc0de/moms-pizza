@@ -204,55 +204,52 @@ export default function ProductManagement() {
 
   return (
     <AuthGuard allowedRoles={['admin']} redirectTo="/admin/login">
-    <div className="min-h-screen bg-slate-900 text-slate-200 p-6 relative z-10 overflow-y-auto custom-scrollbar">
+    <div className="min-h-screen bg-slate-900 text-slate-200 p-3 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
       
       {/* Header NavBar */}
-      <div className="flex justify-between items-center mb-8 max-w-7xl mx-auto bg-slate-800/50 p-4 rounded-3xl border border-slate-700/50 shadow-lg">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-             <div className="bg-emerald-500/20 p-3 rounded-xl text-emerald-400"><Calculator size={24} /></div>
+      <div className="flex flex-col gap-3 mb-6 md:mb-8 max-w-7xl mx-auto bg-slate-800/50 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-slate-700/50 shadow-lg">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2 md:gap-3">
+             <div className="bg-emerald-500/20 p-2 md:p-3 rounded-xl text-emerald-400"><Calculator size={20} /></div>
              <div>
-                <h1 className="text-2xl font-bold text-white leading-tight">Admin Central</h1>
+                <h1 className="text-lg md:text-2xl font-bold text-white leading-tight">Admin Central</h1>
                 <p className="text-xs text-slate-400">Panel de Control</p>
              </div>
           </div>
-          <div className="flex gap-2 bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/dashboard')}>Dashboard Financiero</button>
-             <button className="px-5 py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all" onClick={()=>router.push('/admin/products')}>Gestión de Menú</button>
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/settings')}>Configuración</button>
-          </div>
-        </div>
-        
-        <div className="flex gap-4">          
           <button 
             onClick={handleLogout}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95"
+            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-3 md:px-5 py-2 md:py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95 text-sm"
           >
-            <LogOut size={20} />
-            Salir
+            <LogOut size={18} />
+            <span className="hidden sm:inline">Salir</span>
           </button>
+        </div>
+        <div className="flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/dashboard')}>Dashboard</button>
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all text-sm" onClick={()=>router.push('/admin/products')}>Menú</button>
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/settings')}>Configuración</button>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto">
 
         {/* Sub-tabs: Products vs Employees */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-2 md:gap-3 mb-4 md:mb-6 overflow-x-auto custom-scrollbar whitespace-nowrap">
           <button
             onClick={() => setActiveTab('products')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'products' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'products' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
             Productos ({products.length})
           </button>
           <button
             onClick={() => setActiveTab('employees')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'employees' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all flex items-center gap-2 text-sm md:text-base ${activeTab === 'employees' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
-            <Users size={18} /> Empleados ({employees.length})
+            <Users size={16} /> Empleados ({employees.length})
           </button>
           <button
             onClick={() => setActiveTab('modifiers')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'modifiers' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'modifiers' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
             Modificadores ({modifiers.length})
           </button>
@@ -261,7 +258,7 @@ export default function ProductManagement() {
         {/* PRODUCTS TAB */}
         {activeTab === 'products' && (
           <>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-3">
               <div className="relative w-full max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500" size={20} />
                 <input 
@@ -274,10 +271,10 @@ export default function ProductManagement() {
               </div>
               <button 
                 onClick={() => handleOpenModal()}
-                className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all active:scale-95"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all active:scale-95 text-sm md:text-base flex-shrink-0"
               >
-                <Plus size={20} />
-                Agregar Producto
+                <Plus size={18} />
+                <span className="hidden sm:inline">Agregar</span> Producto
               </button>
             </div>
 

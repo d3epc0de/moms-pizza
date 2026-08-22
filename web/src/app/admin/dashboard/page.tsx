@@ -238,63 +238,61 @@ export default function AdminDashboard() {
 
   return (
     <AuthGuard allowedRoles={['admin']} redirectTo="/admin/login">
-    <div className="min-h-screen bg-slate-900 text-slate-200 p-6 relative z-10 overflow-y-auto custom-scrollbar">
+    <div className="min-h-screen bg-slate-900 text-slate-200 p-3 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
       
       {/* Header NavBar */}
-      <div className="flex justify-between items-center mb-8 max-w-7xl mx-auto bg-slate-800/50 p-4 rounded-3xl border border-slate-700/50 shadow-lg">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-             <div className="bg-emerald-500/20 p-3 rounded-xl text-emerald-400"><Calculator size={24} /></div>
+      <div className="flex flex-col gap-3 mb-6 md:mb-8 max-w-7xl mx-auto bg-slate-800/50 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-slate-700/50 shadow-lg">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2 md:gap-3">
+             <div className="bg-emerald-500/20 p-2 md:p-3 rounded-xl text-emerald-400"><Calculator size={20} /></div>
              <div>
-                <h1 className="text-2xl font-bold text-white leading-tight">Admin Central</h1>
+                <h1 className="text-lg md:text-2xl font-bold text-white leading-tight">Admin Central</h1>
                 <p className="text-xs text-slate-400">{currentEmployee?.name || 'Panel de Control'}</p>
              </div>
           </div>
-          <div className="flex gap-2 bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
-             <button className="px-5 py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all" onClick={()=>router.push('/admin/dashboard')}>Dashboard Financiero</button>
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/products')}>Gestión de Menú</button>
-             <button className="px-5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium" onClick={()=>router.push('/admin/settings')}>Configuración</button>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => setCashoutModalOpen(true)}
+              className="bg-emerald-500 hover:bg-emerald-400 text-white px-3 md:px-5 py-2 md:py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition-all active:scale-95 text-sm md:text-base"
+            >
+              <Banknote size={18} />
+              <span className="hidden sm:inline">Cierre de Caja</span>
+            </button>
+            <button 
+              onClick={handleLogout}
+              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-3 md:px-5 py-2 md:py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95 text-sm md:text-base"
+            >
+              <LogOut size={18} />
+              <span className="hidden sm:inline">Salir</span>
+            </button>
           </div>
         </div>
-        
-        <div className="flex gap-4">
-          <button 
-            onClick={() => setCashoutModalOpen(true)}
-            className="bg-emerald-500 hover:bg-emerald-400 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
-          >
-            <Banknote size={20} />
-            Cierre de Caja
-          </button>
-          
-          <button 
-            onClick={handleLogout}
-            className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95"
-          >
-            <LogOut size={20} />
-            Salir
-          </button>
+        <div className="flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap bg-slate-900/50 p-1 rounded-xl border border-slate-700/50">
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg bg-slate-700 text-white font-medium shadow transition-all text-sm" onClick={()=>router.push('/admin/dashboard')}>Dashboard</button>
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/products')}>Menú</button>
+           <button className="flex-shrink-0 px-4 md:px-5 py-2 md:py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-medium text-sm" onClick={()=>router.push('/admin/settings')}>Configuración</button>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mb-6">
-        <div className="flex gap-3">
+      <div className="max-w-7xl mx-auto mb-4 md:mb-6">
+        <div className="flex gap-2 md:gap-3 overflow-x-auto custom-scrollbar whitespace-nowrap">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'overview' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'overview' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
-            Resumen Analítico
+            Resumen
           </button>
           <button
             onClick={() => setActiveTab('expenses')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${activeTab === 'expenses' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${activeTab === 'expenses' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
-            Gestión de Gastos
+            Gastos
           </button>
           <button
             onClick={() => setActiveTab('closures')}
-            className={`px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'closures' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+            className={`flex-shrink-0 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-bold transition-all flex items-center gap-2 text-sm md:text-base ${activeTab === 'closures' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
           >
-            Historial de Cierres
+            Cierres
           </button>
         </div>
       </div>
@@ -303,8 +301,8 @@ export default function AdminDashboard() {
         {activeTab === 'overview' && (
           <>
             {/* Date Filter Controls */}
-            <div className="glass-panel p-4 rounded-2xl flex flex-wrap gap-4 items-center justify-between shadow-lg">
-          <div className="flex gap-2">
+            <div className="glass-panel p-3 md:p-4 rounded-2xl flex flex-col md:flex-row flex-wrap gap-3 md:gap-4 items-start md:items-center justify-between shadow-lg">
+          <div className="flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap w-full md:w-auto">
             {[
               { id: 'today', label: 'Hoy' },
               { id: 'yesterday', label: 'Ayer' },
@@ -346,7 +344,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Top Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
           <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group col-span-2 border border-blue-500/20 hover:border-blue-400/40 transition-colors shadow-lg shadow-blue-900/20">
             <div className="absolute -right-4 -top-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-all duration-500"></div>
             <div className="flex items-center gap-4 mb-4 relative z-10">

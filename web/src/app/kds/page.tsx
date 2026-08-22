@@ -81,35 +81,34 @@ export default function KitchenDisplaySystem() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-6 relative z-10 flex flex-col">
+    <div className="min-h-screen bg-slate-950 text-slate-200 p-3 md:p-6 relative z-10 flex flex-col">
       
       {/* Header */}
-      <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="bg-orange-500 p-3 rounded-2xl shadow-lg shadow-orange-500/20">
-            <ChefHat size={32} className="text-white" />
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 border-b border-slate-800 pb-4 gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="bg-orange-500 p-2 md:p-3 rounded-xl md:rounded-2xl shadow-lg shadow-orange-500/20">
+            <ChefHat size={24} className="text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">Kitchen Display System</h1>
-            <p className="text-orange-400 font-medium">{businessName} — Línea de Producción</p>
+            <h1 className="text-xl md:text-3xl font-bold text-white tracking-tight">Cocina KDS</h1>
+            <p className="text-orange-400 font-medium text-xs md:text-base">{businessName}</p>
           </div>
         </div>
         
-        <div className="flex items-center gap-6">
-          <div className="bg-slate-900/80 border border-slate-700 px-5 py-2 rounded-xl flex items-center gap-3">
-            <span className="text-slate-400 text-sm font-medium">En cola:</span>
-            <span className="text-3xl font-black text-white">{orders.length}</span>
+        <div className="flex items-center gap-2 md:gap-6 w-full md:w-auto">
+          <div className="bg-slate-900/80 border border-slate-700 px-3 md:px-5 py-1.5 md:py-2 rounded-xl flex items-center gap-2">
+            <span className="text-slate-400 text-xs md:text-sm font-medium">Cola:</span>
+            <span className="text-xl md:text-3xl font-black text-white">{orders.length}</span>
           </div>
-          <div className="bg-slate-900 border border-slate-700 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-inner">
-            <Clock size={24} className="text-blue-400" />
-            <span className="text-2xl font-bold text-white font-mono">{currentTime}</span>
+          <div className="bg-slate-900 border border-slate-700 px-3 md:px-6 py-1.5 md:py-3 rounded-xl md:rounded-2xl flex items-center gap-2 shadow-inner">
+            <Clock size={18} className="text-blue-400" />
+            <span className="text-lg md:text-2xl font-bold text-white font-mono">{currentTime}</span>
           </div>
           <button 
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-3 rounded-xl transition-colors ${soundEnabled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}
-            title={soundEnabled ? 'Sonido activado' : 'Sonido desactivado'}
+            className={`p-2 md:p-3 rounded-xl transition-colors ${soundEnabled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}
           >
-            {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+            {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
           </button>
           <button 
             onClick={() => {
@@ -120,16 +119,15 @@ export default function KitchenDisplaySystem() {
                 router.push('/');
               }
             }}
-            className="text-slate-400 hover:text-white transition-colors px-4 py-2 rounded-xl bg-slate-900 border border-slate-700"
-            title={currentEmployee && currentEmployee.role !== 'cocina' ? "Volver al POS" : "Salir KDS"}
+            className="text-slate-400 hover:text-white transition-colors px-3 py-1.5 md:px-4 md:py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm"
           >
-            {currentEmployee && currentEmployee.role !== 'cocina' ? 'Volver al POS' : 'Salir KDS'}
+            {currentEmployee && currentEmployee.role !== 'cocina' ? 'POS' : 'Salir'}
           </button>
         </div>
       </div>
 
       {/* Orders Grid */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-y-auto custom-scrollbar content-start">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto custom-scrollbar content-start pb-4">
         {sortedOrders.length === 0 ? (
           <div className="col-span-full h-64 flex flex-col items-center justify-center text-slate-500 space-y-4">
             <CheckCircle2 size={64} className="text-emerald-500/50" />
@@ -162,7 +160,7 @@ export default function KitchenDisplaySystem() {
               <div key={order.id} className={`flex flex-col rounded-3xl border-2 ${borderColor} overflow-hidden shadow-xl bg-slate-900 transition-all ${isOvertime ? 'animate-pulse' : ''}`}>
                 
                 {/* Card Header */}
-                <div className={`${headerColor} p-5 flex flex-col text-white`}>
+                <div className={`${headerColor} p-3 md:p-5 flex flex-col text-white`}>
                   <div className="flex justify-between items-start mb-3">
                     <div className={`px-4 py-1.5 rounded-xl text-sm font-black uppercase tracking-widest shadow-md ${order.serviceType === 'to_go' ? 'bg-purple-600 text-white' : 'bg-blue-600 text-white'}`}>
                       {order.serviceType === 'to_go' ? 'DOMICILIO' : 'CONSUMO LOCAL'}
@@ -178,8 +176,8 @@ export default function KitchenDisplaySystem() {
                   </div>
                   <div className="flex justify-between items-end">
                     <div>
-                      <span className="text-5xl font-black tracking-tighter">#{padOrderNumber(order.orderNumber)}</span>
-                      <p className="text-lg opacity-90 mt-1 font-medium">{order.customerInfo}</p>
+                      <span className="text-3xl md:text-5xl font-black tracking-tighter">#{padOrderNumber(order.orderNumber)}</span>
+                      <p className="text-sm md:text-lg opacity-90 mt-1 font-medium">{order.customerInfo}</p>
                     </div>
                   </div>
                   {/* Progress bar */}
