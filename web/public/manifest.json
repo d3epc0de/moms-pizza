@@ -1,0 +1,21 @@
+{
+  "name": "Mom's Pizza POS",
+  "short_name": "Mom's Pizza",
+  "description": "Sistema de Punto de Venta para Mom's Pizza",
+  "start_url": "/pos/dashboard",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
