@@ -45,6 +45,10 @@ const PRINTER_STYLES = `
 `;
 
 function executePrint(htmlContent: string) {
+  // Temporarily disable printing per user request (no printer available)
+  console.log("Printing is temporarily disabled.");
+  return;
+
   const iframe = document.createElement('iframe');
   iframe.style.position = 'fixed';
   iframe.style.right = '0';
