@@ -113,38 +113,42 @@ export default function HistoryPage() {
                 <div key={order.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
                   <div 
                     onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                    className="p-5 flex items-center justify-between cursor-pointer hover:bg-slate-800/80 transition-colors"
+                    className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between cursor-pointer hover:bg-slate-800/80 transition-colors"
                   >
-                    <div className="flex items-center gap-6">
-                      <div className="w-16 text-center">
+                    <div className="flex items-center gap-4 sm:gap-6 w-full md:w-auto">
+                      <div className="w-16 text-left md:text-center shrink-0">
                         <span className="text-sm text-slate-400 block mb-1">Orden</span>
                         <span className="text-xl font-black text-white">#{order.orderNumber.toString().padStart(3, '0')}</span>
                       </div>
                       
-                      <div>
-                        <p className="font-bold text-white text-lg">{order.customerInfo}</p>
-                        <p className="text-sm text-slate-400">{format(new Date(order.createdAt), "dd MMM yyyy - hh:mm a", { locale: es })}</p>
+                      <div className="flex-1">
+                        <p className="font-bold text-white text-base md:text-lg">{order.customerInfo}</p>
+                        <p className="text-xs sm:text-sm text-slate-400">{format(new Date(order.createdAt), "dd MMM yyyy - hh:mm a", { locale: es })}</p>
+                      </div>
+                      
+                      <div className="md:hidden">
+                        {expandedOrder === order.id ? <ChevronUp size={24} className="text-slate-500" /> : <ChevronDown size={24} className="text-slate-500" />}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-8">
-                      <div className="text-right">
-                        <span className="text-sm text-slate-400 block mb-1">Mesero</span>
+                    <div className="flex flex-wrap items-center justify-between gap-4 md:gap-8 w-full md:w-auto mt-4 md:mt-0 pt-4 md:pt-0 border-t border-slate-700/50 md:border-0">
+                      <div className="text-left md:text-right w-1/2 md:w-auto">
+                        <span className="text-xs sm:text-sm text-slate-400 block mb-1">Mesero</span>
                         <span className="font-medium text-slate-200">{order.waiterName}</span>
                       </div>
                       
-                      <div className="text-right">
-                        <span className="text-sm text-slate-400 block mb-1">Total</span>
-                        <span className="font-bold text-white">{formatPrice(order.totalAmount)}</span>
+                      <div className="text-left md:text-right w-1/2 md:w-auto">
+                        <span className="text-xs sm:text-sm text-slate-400 block mb-1">Total</span>
+                        <span className="font-bold text-white text-lg">{formatPrice(order.totalAmount)}</span>
                       </div>
 
-                      <div className="w-32 flex justify-end">
+                      <div className="w-full md:w-32 flex justify-start md:justify-end mt-2 md:mt-0">
                         <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(order.status)}`}>
                           {getStatusLabel(order.status)}
                         </span>
                       </div>
 
-                      <div className="text-slate-500">
+                      <div className="hidden md:block text-slate-500 shrink-0">
                         {expandedOrder === order.id ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
                       </div>
                     </div>
@@ -152,8 +156,8 @@ export default function HistoryPage() {
 
                   {/* Expanded Detail */}
                   {expandedOrder === order.id && (
-                    <div className="p-6 bg-slate-900/50 border-t border-slate-700/50 animate-in slide-in-from-top-2">
-                      <div className="grid grid-cols-2 gap-8">
+                    <div className="p-4 sm:p-6 bg-slate-900/50 border-t border-slate-700/50 animate-in slide-in-from-top-2">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                         <div>
                           <h4 className="text-sm font-bold text-slate-400 mb-4 uppercase tracking-wider">Productos</h4>
                           <ul className="space-y-3">

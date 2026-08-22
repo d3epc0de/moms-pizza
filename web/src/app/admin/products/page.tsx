@@ -291,54 +291,51 @@ export default function ProductManagement() {
                       {filteredProducts.filter(p => p.categoryId === category.id).length} productos
                     </span>
                   </div>
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="bg-slate-800/40 border-b border-slate-700/50">
-                        <th className="py-3 px-6 text-slate-400 font-medium text-sm">Nombre del Producto</th>
-                        <th className="py-3 px-6 text-slate-400 font-medium text-sm text-right">Precio COP</th>
-                        <th className="py-3 px-6 text-slate-400 font-medium text-sm text-center">Estado</th>
-                        <th className="py-3 px-6 text-slate-400 font-medium text-sm text-right">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredProducts.filter(p => p.categoryId === category.id).map(p => (
-                        <tr key={p.id} className="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
-                          <td className="py-4 px-6 font-semibold text-white">{p.emoji} {p.name}</td>
-                          <td className="py-4 px-6 text-right font-bold text-emerald-400">{formatPrice(p.price)}</td>
-                          <td className="py-4 px-6 text-center">
-                            <button 
-                              onClick={() => toggleActive(p.id)}
-                              className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
-                                p.active 
-                                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20' 
-                                  : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'
-                              }`}
-                            >
-                              {p.active ? 'Activo' : 'Inactivo'}
-                            </button>
-                          </td>
-                          <td className="py-4 px-6 text-right">
-                            <div className="flex items-center justify-end gap-2">
-                              <button 
-                                onClick={() => handleOpenModal(p)}
-                                className="p-2 bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white rounded-lg transition-colors shadow"
-                                title="Editar"
-                              >
-                                <Edit2 size={18} />
-                              </button>
-                              <button 
-                                onClick={() => handleDelete(p.id)}
-                                className="p-2 bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white rounded-lg transition-colors shadow"
-                                title="Eliminar"
-                              >
-                                <Trash2 size={18} />
-                              </button>
+                  <div className="flex flex-col divide-y divide-slate-800/50">
+                    {filteredProducts.filter(p => p.categoryId === category.id).map(p => (
+                      <div key={p.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 px-4 sm:px-6 hover:bg-slate-800/30 transition-colors">
+                        <div className="flex justify-between sm:justify-start items-center sm:w-1/2">
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">{p.emoji}</span>
+                            <div>
+                              <h4 className="font-bold text-white text-base md:text-lg">{p.name}</h4>
+                              <p className="font-bold text-emerald-400">{formatPrice(p.price)}</p>
                             </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between sm:justify-end w-full sm:w-1/2 gap-3 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-slate-700/50 sm:border-0">
+                          <button 
+                            onClick={() => toggleActive(p.id)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-colors ${
+                              p.active 
+                                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20' 
+                                : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'
+                            }`}
+                          >
+                            {p.active ? 'Activo' : 'Inactivo'}
+                          </button>
+                          
+                          <div className="flex gap-2">
+                            <button 
+                              onClick={() => handleOpenModal(p)}
+                              className="p-2.5 bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white rounded-xl transition-all shadow-md active:scale-95"
+                              title="Editar"
+                            >
+                              <Edit2 size={18} />
+                            </button>
+                            <button 
+                              onClick={() => handleDelete(p.id)}
+                              className="p-2.5 bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white rounded-xl transition-all shadow-md active:scale-95"
+                              title="Eliminar"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
 
