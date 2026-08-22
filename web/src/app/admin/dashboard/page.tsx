@@ -348,8 +348,8 @@ export default function AdminDashboard() {
         </div>
 
         {/* Top Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
-          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group col-span-2 border border-blue-500/20 hover:border-blue-400/40 transition-colors shadow-lg shadow-blue-900/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
+          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group col-span-1 sm:col-span-2 lg:col-span-2 border border-blue-500/20 hover:border-blue-400/40 transition-colors shadow-lg shadow-blue-900/20">
             <div className="absolute -right-4 -top-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-all duration-500"></div>
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="p-3 bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/20 text-blue-400 rounded-xl shadow-inner"><DollarSign size={24} /></div>
@@ -381,7 +381,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* New Financial Summary Cards */}
-          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group bg-red-900/10 border-red-500/30 hover:border-red-400/50 transition-colors shadow-lg shadow-red-900/20 col-span-1 md:col-span-3">
+          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group bg-red-900/10 border-red-500/30 hover:border-red-400/50 transition-colors shadow-lg shadow-red-900/20 col-span-1 sm:col-span-1 lg:col-span-3">
             <div className="absolute -left-4 -bottom-4 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-400/20 transition-all duration-500"></div>
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="p-3 bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/20 text-red-400 rounded-xl shadow-inner"><Banknote size={24} /></div>
@@ -390,7 +390,7 @@ export default function AdminDashboard() {
             <p className="text-3xl font-black text-red-400 relative z-10 tracking-tight">{formatPrice(dailySummary.expensesTotal)}</p>
           </div>
 
-          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group bg-emerald-900/10 border-emerald-500/30 hover:border-emerald-400/50 transition-colors shadow-lg shadow-emerald-900/20 col-span-1 md:col-span-3">
+          <div className="glass-panel p-6 rounded-3xl relative overflow-hidden group bg-emerald-900/10 border-emerald-500/30 hover:border-emerald-400/50 transition-colors shadow-lg shadow-emerald-900/20 col-span-1 sm:col-span-1 lg:col-span-3">
             <div className="absolute -left-4 -bottom-4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-400/20 transition-all duration-500"></div>
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="p-3 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/20 text-emerald-400 rounded-xl shadow-inner"><Calculator size={24} /></div>
@@ -400,7 +400,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Sales by Hour Chart */}
-          <div className="glass-panel p-6 rounded-3xl lg:col-span-2">
+          <div className="glass-panel p-6 rounded-3xl col-span-1 sm:col-span-2 lg:col-span-full">
             <h3 className="text-xl font-bold text-white mb-6">Ventas por Hora</h3>
             <div className="h-72">
               {salesByHour.length === 0 ? (
@@ -459,7 +459,7 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={topProducts} layout="vertical" margin={{ top: 5, right: 30, left: 80, bottom: 5 }}>
+                  <BarChart data={topProducts} layout="vertical" margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
                     <defs>
                       <linearGradient id="colorPlates" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.8}/>
@@ -467,8 +467,8 @@ export default function AdminDashboard() {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} opacity={0.4} />
-                    <XAxis type="number" stroke="#94a3b8" tickLine={false} axisLine={false} />
-                    <YAxis dataKey="name" type="category" width={150} stroke="#cbd5e1" tickLine={false} axisLine={false} tick={{ fill: '#f8fafc', fontSize: 13 }} />
+                    <XAxis type="number" stroke="#94a3b8" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                    <YAxis dataKey="name" type="category" width={90} stroke="#cbd5e1" tickLine={false} axisLine={false} tick={{ fill: '#f8fafc', fontSize: 11 }} />
                     <RechartsTooltip 
                       cursor={{ fill: '#334155', opacity: 0.2 }}
                       contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.8)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
@@ -567,55 +567,57 @@ export default function AdminDashboard() {
             </span>
           </div>
           <div className="overflow-x-auto custom-scrollbar pb-4">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-700 text-slate-400">
-                  <th className="py-4 px-4 font-medium"># Orden</th>
-                  <th className="py-4 px-4 font-medium">Cliente</th>
-                  <th className="py-4 px-4 font-medium">Fecha y Hora</th>
-                  <th className="py-4 px-4 font-medium">Mesero</th>
-                  <th className="py-4 px-4 font-medium">Método</th>
-                  <th className="py-4 px-4 font-medium text-right">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentTransactions.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-500">
-                      No hay transacciones registradas en este período.
-                    </td>
-                  </tr>
-                ) : (
-                  recentTransactions.map((tx) => {
-                    const methodColors: Record<string, string> = {
-                      cash: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-                      card: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-                      nequi: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-                      transfer: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-                    };
-                    const methodNames: Record<string, string> = {
-                      cash: 'Efectivo', card: 'Tarjeta', nequi: 'Nequi', transfer: 'Transferencia'
-                    };
-                    return (
-                      <tr key={tx.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
-                        <td className="py-4 px-4 font-bold text-white">#{tx.orderNumber?.toString().padStart(3, '0')}</td>
-                        <td className="py-4 px-4 text-slate-300">{tx.customerInfo}</td>
-                        <td className="py-4 px-4 text-slate-300">
-                          {format(new Date(tx.createdAt), "dd MMM yy, hh:mm a", { locale: es })}
-                        </td>
-                        <td className="py-4 px-4 text-slate-300">{tx.waiterName}</td>
-                        <td className="py-4 px-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${methodColors[tx.paymentMethod || 'cash']}`}>
+            <div className="flex flex-col space-y-3">
+              {recentTransactions.length === 0 ? (
+                <div className="py-12 text-center text-slate-500 bg-slate-800/20 rounded-xl border border-slate-700/30">
+                  No hay transacciones registradas en este período.
+                </div>
+              ) : (
+                recentTransactions.map((tx) => {
+                  const methodColors: Record<string, string> = {
+                    cash: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+                    card: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+                    nequi: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+                    transfer: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+                  };
+                  const methodNames: Record<string, string> = {
+                    cash: 'Efectivo', card: 'Tarjeta', nequi: 'Nequi', transfer: 'Transferencia'
+                  };
+                  return (
+                    <div key={tx.id} className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-800/60 transition-colors">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-slate-900 px-3 py-2 rounded-xl border border-slate-700/50 text-center min-w-[4rem]">
+                          <span className="text-[10px] text-slate-400 block uppercase tracking-wider mb-0.5">Orden</span>
+                          <span className="font-bold text-white">#{tx.orderNumber?.toString().padStart(3, '0')}</span>
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-200 text-sm md:text-base">{tx.customerInfo}</p>
+                          <p className="text-xs text-slate-400 mt-0.5">{format(new Date(tx.createdAt), "dd MMM, hh:mm a", { locale: es })}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-6 pt-3 md:pt-0 border-t border-slate-700/50 md:border-0 w-full md:w-auto">
+                        <div className="text-left md:text-right">
+                          <span className="text-[10px] text-slate-400 block uppercase tracking-wider mb-0.5 md:hidden">Mesero</span>
+                          <span className="text-sm text-slate-300">{tx.waiterName}</span>
+                        </div>
+                        
+                        <div>
+                          <span className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${methodColors[tx.paymentMethod || 'cash']}`}>
                             {methodNames[tx.paymentMethod || 'cash']}
                           </span>
-                        </td>
-                        <td className="py-4 px-4 text-right font-bold text-white">{formatPrice(tx.totalAmount)}</td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+                        </div>
+                        
+                        <div className="text-right ml-auto md:ml-4 min-w-[5rem]">
+                          <span className="text-[10px] text-slate-400 block uppercase tracking-wider mb-0.5 md:hidden">Total</span>
+                          <span className="font-bold text-white text-base md:text-lg">{formatPrice(tx.totalAmount)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
         </div>
         </>
