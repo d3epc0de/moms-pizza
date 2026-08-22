@@ -52,10 +52,10 @@ export default function PosPinLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative z-10">
-      <Link href="/" className="absolute top-8 left-8 text-slate-400 hover:text-white flex items-center gap-2 transition-colors bg-slate-800/50 p-3 rounded-xl border border-slate-700/50 hover:bg-slate-700/50">
+    <div className="min-h-screen flex items-center justify-center p-4 pt-20 md:pt-4 relative z-10">
+      <Link href="/" className="absolute top-4 left-4 md:top-8 md:left-8 z-50 text-slate-400 hover:text-white flex items-center gap-2 transition-colors bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 hover:bg-slate-700 shadow-lg backdrop-blur-md">
         <ArrowLeft size={20} />
-        <span className="font-medium">Volver</span>
+        <span className="font-medium hidden sm:inline">Volver</span>
       </Link>
 
       <div className="glass-panel p-8 rounded-3xl w-full max-w-sm flex flex-col items-center">
