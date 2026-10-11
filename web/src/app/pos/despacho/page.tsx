@@ -16,30 +16,48 @@ export default function DespachoPage() {
   const [now, setNow] = useState(Date.now());
   const previousOrderCount = useRef(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [autoPrintEnabled, setAutoPrintEnabled] = useState(false);
 
   // Filter: only show non-delivered orders
   const displayOrders = allOrders.filter(o => o.status !== 'delivered');
 
-  // Sound alert for new orders
+  // Sound and Auto-print alert for new orders
   useEffect(() => {
-    if (displayOrders.length > previousOrderCount.current && soundEnabled) {
-      try {
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = 660;
-        osc.type = 'sine';
-        gain.gain.value = 0.25;
-        osc.start();
-        setTimeout(() => { osc.stop(); ctx.close(); }, 400);
-      } catch (e) {
-        console.log('Audio not available');
+    if (displayOrders.length > previousOrderCount.current) {
+      if (soundEnabled) {
+        try {
+          const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = 660;
+          osc.type = 'sine';
+          gain.gain.value = 0.25;
+          osc.start();
+          setTimeout(() => { osc.stop(); ctx.close(); }, 400);
+        } catch (e) {
+          console.log('Audio not available');
+        }
+      }
+
+      // Auto-print incoming order if station is designated as printer terminal
+      if (autoPrintEnabled && previousOrderCount.current > 0) {
+        const newestOrder = displayOrders[0];
+        if (newestOrder) {
+          printKitchenTicket({
+            orderNumber: newestOrder.orderNumber,
+            customerInfo: newestOrder.customerInfo,
+            serviceType: newestOrder.serviceType,
+            waiterName: newestOrder.waiterName,
+            date: newestOrder.createdAt,
+            items: newestOrder.items,
+          });
+        }
       }
     }
     previousOrderCount.current = displayOrders.length;
-  }, [displayOrders.length, soundEnabled]);
+  }, [displayOrders, soundEnabled, autoPrintEnabled]);
 
   // Timer
   useEffect(() => {
@@ -65,7 +83,20 @@ export default function DespachoPage() {
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setAutoPrintEnabled(!autoPrintEnabled)}
+            title={autoPrintEnabled ? "Auto-impresión de comandas activa" : "Auto-impresión desactivada"}
+            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-bold transition-all border ${
+              autoPrintEnabled 
+                ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-sm shadow-blue-500/10' 
+                : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:text-slate-200'
+            }`}
+          >
+            <Printer size={16} />
+            <span className="hidden sm:inline">Auto-Impresión</span>
+            <span className={`w-2 h-2 rounded-full ${autoPrintEnabled ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`}></span>
+          </button>
           <button 
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={`p-3 rounded-xl transition-colors ${soundEnabled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}
