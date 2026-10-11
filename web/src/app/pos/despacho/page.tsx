@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useSubmittedOrdersStore, SubmittedOrder } from "@/lib/store/submittedOrdersStore";
-import { ArrowLeft, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX, Printer } from "lucide-react";
 import Link from "next/link";
 import { useActiveOrdersStore } from "@/lib/store/activeOrdersStore";
 import { formatPrice, formatElapsedTime, calculateProgressPercent, padOrderNumber } from "@/lib/utils";
+import { printKitchenTicket } from "@/lib/printUtils";
 
 const MAX_TIME_MS = 30 * 60 * 1000; // 30 min
 
@@ -141,11 +142,28 @@ export default function DespachoPage() {
                       <span className="text-slate-500 text-xs mt-1">{order.waiterName}</span>
                     </div>
                     <div className="flex flex-col items-end">
-                      <span className={`text-3xl font-black font-mono tracking-tighter ${
-                        isOvertime ? 'text-red-500' : stateColor === 'yellow' ? 'text-yellow-500' : stateColor === 'green' ? 'text-emerald-500' : 'text-orange-500'
-                      }`}>
-                        {formatElapsedTime(elapsed)}
-                      </span>
+                      <div className="flex items-center gap-2 mb-1">
+                        <button
+                          onClick={() => printKitchenTicket({
+                            orderNumber: order.orderNumber,
+                            customerInfo: order.customerInfo,
+                            serviceType: order.serviceType,
+                            waiterName: order.waiterName,
+                            date: order.createdAt,
+                            items: order.items,
+                          })}
+                          title="Reimprimir Comanda"
+                          className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg border border-slate-700 transition-all active:scale-95 flex items-center gap-1 text-xs font-semibold"
+                        >
+                          <Printer size={14} />
+                          <span>Imprimir</span>
+                        </button>
+                        <span className={`text-3xl font-black font-mono tracking-tighter ${
+                          isOvertime ? 'text-red-500' : stateColor === 'yellow' ? 'text-yellow-500' : stateColor === 'green' ? 'text-emerald-500' : 'text-orange-500'
+                        }`}>
+                          {formatElapsedTime(elapsed)}
+                        </span>
+                      </div>
                       <div className="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
                         <div 
                           className={`h-full transition-all duration-1000 rounded-full ${

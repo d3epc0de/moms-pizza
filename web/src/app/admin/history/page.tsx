@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Calculator, LogOut, Search, Clock, ChevronDown, ChevronUp } from "lucide-react";
+import { Calculator, LogOut, Search, Clock, ChevronDown, ChevronUp, Printer, ChefHat } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSubmittedOrdersStore } from "@/lib/store/submittedOrdersStore";
 import { useEmployeeStore } from "@/lib/store/employeeStore";
@@ -10,6 +10,7 @@ import AdminNav from "@/components/admin/AdminNav";
 import { formatPrice } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { printCustomerReceipt, printKitchenTicket } from "@/lib/printUtils";
 
 export default function HistoryPage() {
   const router = useRouter();
@@ -202,6 +203,42 @@ export default function HistoryPage() {
                             <div className="flex justify-between">
                               <span className="text-slate-300 font-bold">Total Cobrado:</span>
                               <span className="text-white font-black text-lg">{formatPrice(order.totalAmount)}</span>
+                            </div>
+                            
+                            <div className="pt-3 border-t border-slate-700 flex flex-col sm:flex-row gap-2">
+                              <button
+                                onClick={() => printCustomerReceipt({
+                                  orderNumber: order.orderNumber,
+                                  customerInfo: order.customerInfo,
+                                  serviceType: order.serviceType,
+                                  waiterName: order.waiterName,
+                                  date: order.createdAt,
+                                  items: order.items,
+                                  totalAmount: order.totalAmount,
+                                  amountReceived: order.amountReceived,
+                                  changeGiven: order.changeGiven,
+                                  paymentMethod: order.paymentMethod,
+                                  discount: order.discount,
+                                })}
+                                className="flex-1 flex items-center justify-center gap-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all active:scale-95"
+                              >
+                                <Printer size={16} />
+                                Reimprimir Factura
+                              </button>
+                              <button
+                                onClick={() => printKitchenTicket({
+                                  orderNumber: order.orderNumber,
+                                  customerInfo: order.customerInfo,
+                                  serviceType: order.serviceType,
+                                  waiterName: order.waiterName,
+                                  date: order.createdAt,
+                                  items: order.items,
+                                })}
+                                className="flex-1 flex items-center justify-center gap-2 bg-orange-600/20 hover:bg-orange-600/30 text-orange-400 border border-orange-500/30 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all active:scale-95"
+                              >
+                                <ChefHat size={16} />
+                                Reimprimir Comanda
+                              </button>
                             </div>
                           </div>
                         </div>

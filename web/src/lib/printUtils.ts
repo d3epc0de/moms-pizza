@@ -2,6 +2,7 @@ import { formatPrice } from "./utils";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { CartItem } from "./store/cartStore";
+import { supabase, isMock } from "./supabase";
 
 export interface PrintOrder {
   orderNumber: number | string;
@@ -45,9 +46,8 @@ const PRINTER_STYLES = `
 `;
 
 function executePrint(htmlContent: string) {
-  // Temporarily disable printing per user request (no printer available)
-  console.log("Printing is temporarily disabled.");
-  /*
+  if (typeof window === 'undefined') return;
+
   const iframe = document.createElement('iframe');
   iframe.style.position = 'fixed';
   iframe.style.right = '0';
@@ -61,8 +61,13 @@ function executePrint(htmlContent: string) {
   if (doc) {
     doc.open();
     doc.write(`
+      <!DOCTYPE html>
       <html>
-        <head><style>${PRINTER_STYLES}</style></head>
+        <head>
+          <meta charset="utf-8">
+          <title>Imprimir Ticket</title>
+          <style>${PRINTER_STYLES}</style>
+        </head>
         <body>${htmlContent}</body>
       </html>
     `);
@@ -70,13 +75,36 @@ function executePrint(htmlContent: string) {
 
     iframe.contentWindow?.focus();
     setTimeout(() => {
-      iframe.contentWindow?.print();
+      try {
+        iframe.contentWindow?.print();
+      } catch (err) {
+        console.error("Print error:", err);
+      }
       setTimeout(() => {
-        document.body.removeChild(iframe);
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
       }, 1000);
     }, 250);
   }
-  */
+}
+
+async function sendToPrintQueue(jobType: 'kitchen_ticket' | 'customer_receipt', payload: any) {
+  if (typeof window === 'undefined') return;
+  if (!isMock) {
+    try {
+      const { error } = await supabase.from('print_jobs').insert({
+        job_type: jobType,
+        payload,
+        status: 'pending'
+      });
+      if (error) {
+        console.error(`[Error print_jobs ${jobType}]:`, error);
+      }
+    } catch (e) {
+      console.error("Exception in sendToPrintQueue:", e);
+    }
+  }
 }
 
 export function printKitchenTicket(order: PrintOrder) {
@@ -116,6 +144,20 @@ export function printKitchenTicket(order: PrintOrder) {
   `;
 
   executePrint(html);
+
+  sendToPrintQueue('kitchen_ticket', {
+    order_number: order.orderNumber,
+    table_number: order.customerInfo,
+    waiter_name: order.waiterName,
+    service_type: order.serviceType,
+    items: order.items.map(item => ({
+      name: item.name,
+      quantity: item.quantity,
+      unit_price: item.basePrice || 0,
+      modifiers: item.modifiers || [],
+      notes: item.notes || ''
+    }))
+  });
 }
 
 export function printCustomerReceipt(order: PrintOrder) {
@@ -193,4 +235,23 @@ export function printCustomerReceipt(order: PrintOrder) {
   `;
 
   executePrint(html);
+
+  sendToPrintQueue('customer_receipt', {
+    order_number: order.orderNumber,
+    table_number: order.customerInfo,
+    service_type: order.serviceType,
+    waiter_name: order.waiterName,
+    order_date: formattedDate,
+    payment_method: order.paymentMethod,
+    total_amount: order.totalAmount,
+    amount_received: order.amountReceived,
+    change_given: order.changeGiven,
+    discount: order.discount,
+    items: order.items.map(item => ({
+      name: item.name,
+      quantity: item.quantity,
+      unit_price: item.basePrice || 0,
+      modifiers: item.modifiers || []
+    }))
+  });
 }
